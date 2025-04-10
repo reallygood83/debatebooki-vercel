@@ -6,7 +6,8 @@ import {
   BookOpenIcon, 
   QuestionMarkCircleIcon, 
   CheckCircleIcon, 
-  PencilIcon
+  PencilIcon,
+  GlobeAltIcon
 } from '@heroicons/react/24/outline';
 import Head from 'next/head';
 
@@ -198,7 +199,8 @@ export default function Home() {
     { title: "토론 생성하기", icon: <ChatBubbleLeftRightIcon className="h-5 w-5" /> },
     { title: "찬반 논거 아이디어", icon: <UserGroupIcon className="h-5 w-5" /> },
     { title: "의견 피드백 받기", icon: <PencilIcon className="h-5 w-5" /> },
-    { title: "토론 마무리 활동", icon: <QuestionMarkCircleIcon className="h-5 w-5" /> }
+    { title: "토론 마무리 활동", icon: <QuestionMarkCircleIcon className="h-5 w-5" /> },
+    { title: "하이러닝 바로가기", icon: <GlobeAltIcon className="h-5 w-5" />, externalLink: "https://hi.goe.go.kr/" }
   ];
 
   return (
@@ -226,11 +228,11 @@ export default function Home() {
                 <button
                   key={idx}
                   className={`flex items-center py-3 px-4 font-nanum-square text-sm sm:text-base transition-all duration-300 ${
-                    activeTab === idx 
+                    activeTab === idx && !tab.externalLink
                       ? "bg-primary text-white" 
                       : "hover:bg-pink-50 text-gray-700"
                   }`}
-                  onClick={() => setActiveTab(idx as TabIndex)}
+                  onClick={() => tab.externalLink ? window.open(tab.externalLink, '_blank') : setActiveTab(idx as TabIndex)}
                 >
                   <span className="mr-2">{tab.icon}</span>
                   {tab.title}
