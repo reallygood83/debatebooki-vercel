@@ -20,8 +20,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        jua: ['Jua', 'sans-serif'],
-        gaegu: ['Gaegu', 'cursive'],
+        'nanum-square': ['Nanum Square Round', 'sans-serif'],
+        'noto-sans-kr': ['Noto Sans KR', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
