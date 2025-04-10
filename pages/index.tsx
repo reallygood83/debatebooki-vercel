@@ -20,6 +20,7 @@ export default function Home() {
 
   // 토론 주제 생성 상태
   const [topicRecommendations, setTopicRecommendations] = useState('');
+  const [topicCategory, setTopicCategory] = useState('');
 
   // 토론 생성 상태
   const [debateTopic, setDebateTopic] = useState('');
@@ -73,7 +74,8 @@ export default function Home() {
   };
 
   // 토론 주제 추천 요청 처리
-  const handleRecommendTopics = async () => {
+  const handleRecommendTopics = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setIsLoading(true);
     try {
       const response = await fetch('/api/generate-debate', {
@@ -81,7 +83,10 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action: 'recommend_topics' }),
+        body: JSON.stringify({ 
+          action: 'recommend_topics',
+          category: topicCategory 
+        }),
       });
       const data = await response.json();
       setTopicRecommendations(data.result);
@@ -286,9 +291,25 @@ export default function Home() {
                   토론 주제 추천
                 </h2>
                 
-                <div className="mb-6">
+                <form onSubmit={handleRecommendTopics} className="mb-6 space-y-4">
+                  <div>
+                    <label htmlFor="topicCategory" className="block text-lg font-jua text-gray-700 mb-2">
+                      주제 분야 (선택사항)
+                    </label>
+                    <input
+                      type="text"
+                      id="topicCategory"
+                      value={topicCategory}
+                      onChange={(e) => setTopicCategory(e.target.value)}
+                      className="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:ring-primary focus:border-primary font-gaegu text-lg"
+                      placeholder="예: 환경, 학교생활, 과학기술, 사회문제 등"
+                    />
+                    <p className="mt-2 text-sm text-gray-500 font-gaegu">
+                      특정 분야의 토론 주제를 추천받고 싶다면 입력해보세요. 비워두면 다양한 분야의 주제를 추천해드립니다.
+                    </p>
+                  </div>
                   <button 
-                    onClick={handleRecommendTopics}
+                    type="submit"
                     disabled={isLoading}
                     className="btn-primary py-3 flex items-center justify-center w-full"
                   >
@@ -303,11 +324,11 @@ export default function Home() {
                     ) : (
                       <span className="flex items-center">
                         <LightBulbIcon className="h-5 w-5 mr-2" />
-                        새로운 토론 주제 추천받기
+                        토론 주제 추천받기
                       </span>
                     )}
                   </button>
-                </div>
+                </form>
 
                 {topicRecommendations && (
                   <div className="prose max-w-none font-gaegu">

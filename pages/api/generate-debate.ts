@@ -15,6 +15,7 @@ const TOPIC_RECOMMENDATION_PROMPT = `
 - 학생들의 일상생활이나 학교생활과 관련된 주제를 포함시킨다.
 - 사회적, 윤리적 사고를 촉진하는 주제를 포함한다.
 - 제안하는 각 주제에 대해 그 주제가 왜 좋은 토론 주제인지 간단히 설명한다.
+{category_instruction}
 
 # 출력 형식:
 ## 토론 주제 추천 (초등학교 6학년)
@@ -136,7 +137,7 @@ export default async function handler(
   }
 
   try {
-    const { action, topic, argument } = req.body;
+    const { action, topic, argument, category } = req.body;
 
     if (!action) {
       return res.status(400).json({ error: 'Action is required' });
@@ -148,7 +149,17 @@ export default async function handler(
 
     switch (action) {
       case 'recommend_topics':
-        prompt = TOPIC_RECOMMENDATION_PROMPT;
+        let categoryInstruction = '';
+        
+        if (category) {
+          categoryInstruction = `
+- 다음 분야에 초점을 맞춰 토론 주제를 추천한다: ${category}
+- 이 분야와 관련된 초등학생이 이해할 수 있는 토론 주제를 선정한다.
+- 분야는 넓게 해석하여 관련된 다양한 측면의 주제를 포함한다.
+          `;
+        }
+        
+        prompt = TOPIC_RECOMMENDATION_PROMPT.replace('{category_instruction}', categoryInstruction);
         break;
       
       case 'generate_arguments':
