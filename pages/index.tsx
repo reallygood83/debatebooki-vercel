@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Head from 'next/head';
 import { ChatBubbleLeftRightIcon, LightBulbIcon, UserGroupIcon, BookOpenIcon } from '@heroicons/react/24/outline';
+import Head from 'next/head';
 
 export default function Home() {
   const [debateTopic, setDebateTopic] = useState('');
@@ -30,19 +30,48 @@ export default function Home() {
     }
   };
 
+  const formatDebateResult = (text: string) => {
+    if (!text) return [];
+    
+    const sections: { title: string; content: string[] }[] = [];
+    let currentSection = { title: '', content: [] as string[] };
+    
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    
+    for (const line of lines) {
+      if (line.includes('[') && line.includes(']')) {
+        if (currentSection.title) {
+          sections.push({...currentSection});
+        }
+        currentSection = {
+          title: line.trim(),
+          content: []
+        };
+      } else {
+        currentSection.content.push(line.trim());
+      }
+    }
+    
+    if (currentSection.title) {
+      sections.push(currentSection);
+    }
+    
+    return sections;
+  };
+
+  const debateSections = formatDebateResult(debateResult);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-pink-100">
       <Head>
         <title>AI 토론 친구</title>
-        <meta name="description" content="AI를 활용한 토론 학습 도우미" />
-        <link rel="icon" href="/favicon.ico" />
         <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-jua text-primary-dark mb-4">
+          <div className="text-center mb-8 bg-white rounded-xl shadow-lg p-6 animate-float">
+            <h1 className="text-4xl font-jua text-primary-dark mb-2">
               AI 토론 친구
             </h1>
             <p className="text-lg font-gaegu text-gray-700">
@@ -51,27 +80,27 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+            <div className="card text-center hover:shadow-xl transition-shadow">
               <LightBulbIcon className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-jua text-primary-dark mb-2">창의적 사고</h3>
               <p className="font-gaegu text-gray-600">다양한 관점에서 생각해보기</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+            <div className="card text-center hover:shadow-xl transition-shadow">
               <UserGroupIcon className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-jua text-primary-dark mb-2">토론 능력</h3>
               <p className="font-gaegu text-gray-600">의사소통 능력 향상</p>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+            <div className="card text-center hover:shadow-xl transition-shadow">
               <BookOpenIcon className="h-12 w-12 text-primary mx-auto mb-4" />
               <h3 className="text-xl font-jua text-primary-dark mb-2">학습 효과</h3>
               <p className="font-gaegu text-gray-600">깊이 있는 학습 경험</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="card mb-8">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="topic" className="block text-lg font-jua text-gray-700 mb-2">
                   토론 주제
                 </label>
                 <input
@@ -79,15 +108,15 @@ export default function Home() {
                   id="topic"
                   value={debateTopic}
                   onChange={(e) => setDebateTopic(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary focus:border-primary"
-                  placeholder="토론 주제를 입력하세요"
+                  className="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:ring-primary focus:border-primary font-gaegu text-lg"
+                  placeholder="토론하고 싶은 주제를 입력하세요"
                   required
                 />
               </div>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-jua py-2 px-4 rounded-md transition duration-300 flex items-center justify-center"
+                className="w-full btn-primary py-3 flex items-center justify-center"
               >
                 {isLoading ? (
                   <span className="flex items-center">
@@ -107,23 +136,30 @@ export default function Home() {
             </form>
           </div>
 
-          {debateResult && (
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-              <h2 className="text-2xl font-jua text-primary-dark mb-4">토론 결과</h2>
-              <div className="prose max-w-none font-gaegu">
-                {debateResult.split('\n').map((line, i) => (
-                  <p key={i} className="mb-4">{line}</p>
+          {debateSections.length > 0 && (
+            <div className="card mb-8">
+              <h2 className="text-2xl font-jua text-primary-dark mb-6 border-b-2 border-pink-200 pb-2">토론 결과</h2>
+              <div className="space-y-6 font-gaegu">
+                {debateSections.map((section, index) => (
+                  <div key={index} className="mb-4">
+                    <h3 className="text-xl font-jua text-gray-700 mb-3">{section.title}</h3>
+                    <ul className="space-y-2 list-disc pl-5">
+                      {section.content.map((item, i) => (
+                        <li key={i} className="text-lg text-gray-600">{item}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
               </div>
             </div>
           )}
 
           {debateHistory.length > 0 && (
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-jua text-primary-dark mb-4">최근 토론 주제</h2>
-              <ul className="space-y-2">
+            <div className="card">
+              <h2 className="text-2xl font-jua text-primary-dark mb-4 border-b-2 border-pink-200 pb-2">최근 토론 주제</h2>
+              <ul className="space-y-2 divide-y divide-pink-100">
                 {debateHistory.map((topic, index) => (
-                  <li key={index} className="font-gaegu text-gray-700">
+                  <li key={index} className="font-gaegu text-gray-700 text-lg py-2">
                     {topic}
                   </li>
                 ))}
