@@ -39,7 +39,7 @@ a {
 
 @layer components {
   .btn-primary {
-    @apply bg-primary hover:bg-primary-dark text-white font-jua py-2 px-4 rounded-md transition duration-300;
+    @apply bg-primary hover:bg-primary-dark text-white font-nanum-square py-2 px-4 rounded-md transition duration-300;
   }
   
   .card {
