@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
+import { ChatBubbleLeftRightIcon, LightBulbIcon, UserGroupIcon, BookOpenIcon } from '@heroicons/react/24/outline';
 
 export default function Home() {
   const [debateTopic, setDebateTopic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [debateResult, setDebateResult] = useState('');
+  const [debateHistory, setDebateHistory] = useState<string[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +21,8 @@ export default function Home() {
       });
       const data = await response.json();
       setDebateResult(data.result);
+      setDebateHistory(prev => [...prev, debateTopic]);
+      setDebateTopic('');
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -45,6 +48,24 @@ export default function Home() {
             <p className="text-lg font-gaegu text-gray-700">
               AI와 함께하는 즐거운 토론 학습
             </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <LightBulbIcon className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-jua text-primary-dark mb-2">창의적 사고</h3>
+              <p className="font-gaegu text-gray-600">다양한 관점에서 생각해보기</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <UserGroupIcon className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-jua text-primary-dark mb-2">토론 능력</h3>
+              <p className="font-gaegu text-gray-600">의사소통 능력 향상</p>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+              <BookOpenIcon className="h-12 w-12 text-primary mx-auto mb-4" />
+              <h3 className="text-xl font-jua text-primary-dark mb-2">학습 효과</h3>
+              <p className="font-gaegu text-gray-600">깊이 있는 학습 경험</p>
+            </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -87,13 +108,26 @@ export default function Home() {
           </div>
 
           {debateResult && (
-            <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
               <h2 className="text-2xl font-jua text-primary-dark mb-4">토론 결과</h2>
               <div className="prose max-w-none font-gaegu">
                 {debateResult.split('\n').map((line, i) => (
                   <p key={i} className="mb-4">{line}</p>
                 ))}
               </div>
+            </div>
+          )}
+
+          {debateHistory.length > 0 && (
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h2 className="text-2xl font-jua text-primary-dark mb-4">최근 토론 주제</h2>
+              <ul className="space-y-2">
+                {debateHistory.map((topic, index) => (
+                  <li key={index} className="font-gaegu text-gray-700">
+                    {topic}
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
