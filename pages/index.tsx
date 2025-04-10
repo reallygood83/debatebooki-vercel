@@ -200,6 +200,7 @@ export default function Home() {
     { title: "찬반 논거 아이디어", icon: <UserGroupIcon className="h-5 w-5" /> },
     { title: "의견 피드백 받기", icon: <PencilIcon className="h-5 w-5" /> },
     { title: "토론 마무리 활동", icon: <QuestionMarkCircleIcon className="h-5 w-5" /> },
+    { title: "그로스 허브", icon: <GlobeAltIcon className="h-5 w-5" />, externalLink: "https://script.google.com/macros/s/AKfycbxRh28gE6v7s7Xf-iuvWjMqORcBGZa-9U4Pqap4-Qlqc7u-KJ8aBN9L7shN0vxXqOVD/exec" },
     { title: "하이러닝 바로가기", icon: <GlobeAltIcon className="h-5 w-5" />, externalLink: "https://hi.goe.go.kr/" }
   ];
 
@@ -223,7 +224,7 @@ export default function Home() {
 
           {/* 탭 네비게이션 */}
           <div className="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap justify-center">
               {tabs.map((tab, idx) => (
                 <button
                   key={idx}
@@ -246,31 +247,31 @@ export default function Home() {
             {/* 1. 경기 토론 수업 모형 */}
             {activeTab === 0 && (
               <div>
-                <h2 className="text-2xl font-nanum-square text-primary-dark mb-6 pb-2 border-b-2 border-pink-200">
+                <h2 className="text-2xl font-nanum-square text-primary-dark mb-6 pb-2 border-b-2 border-pink-200 text-center">
                   경기 토론 수업 모형 소개
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <div className="card text-center hover:shadow-xl transition-shadow">
-                    <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <div className="card text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+                    <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
                       <span className="text-xl font-bold text-primary-dark">1</span>
                     </div>
-                    <h3 className="text-xl font-nanum-square text-primary-dark mb-2">다름 드러내기</h3>
-                    <p className="font-noto-sans-kr text-gray-600">서로 다른 생각과 관점을 자유롭게 표현합니다.</p>
+                    <h3 className="text-xl font-nanum-square text-primary-dark mb-3">다름 드러내기</h3>
+                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">서로 다른 생각과 관점을 자유롭게 표현합니다.</p>
                   </div>
-                  <div className="card text-center hover:shadow-xl transition-shadow">
-                    <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <div className="card text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+                    <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
                       <span className="text-xl font-bold text-primary-dark">2</span>
                     </div>
-                    <h3 className="text-xl font-nanum-square text-primary-dark mb-2">다름 이해하기</h3>
-                    <p className="font-noto-sans-kr text-gray-600">서로 다른 의견의 이유와 배경을 이해합니다.</p>
+                    <h3 className="text-xl font-nanum-square text-primary-dark mb-3">다름 이해하기</h3>
+                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">서로 다른 의견의 이유와 배경을 이해합니다.</p>
                   </div>
-                  <div className="card text-center hover:shadow-xl transition-shadow">
-                    <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                  <div className="card text-center hover:shadow-xl transition-shadow flex flex-col items-center">
+                    <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
                       <span className="text-xl font-bold text-primary-dark">3</span>
                     </div>
-                    <h3 className="text-xl font-nanum-square text-primary-dark mb-2">다름과 공존하기</h3>
-                    <p className="font-noto-sans-kr text-gray-600">다양한 의견이 함께 존재할 수 있음을 인정합니다.</p>
+                    <h3 className="text-xl font-nanum-square text-primary-dark mb-3">다름과 공존하기</h3>
+                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">다양한 의견이 함께 존재할 수 있음을 인정합니다.</p>
                   </div>
                 </div>
 
