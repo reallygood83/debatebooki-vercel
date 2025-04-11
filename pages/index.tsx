@@ -7,7 +7,8 @@ import {
   QuestionMarkCircleIcon, 
   CheckCircleIcon, 
   PencilIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  NewspaperIcon
 } from '@heroicons/react/24/outline';
 import Head from 'next/head';
 
@@ -200,6 +201,7 @@ export default function Home() {
     { title: "찬반 논거 아이디어", icon: <UserGroupIcon className="h-5 w-5" /> },
     { title: "의견 피드백 받기", icon: <PencilIcon className="h-5 w-5" /> },
     { title: "토론 마무리 활동", icon: <QuestionMarkCircleIcon className="h-5 w-5" /> },
+    { title: "뉴스 읽기자료", icon: <NewspaperIcon className="h-5 w-5" />, externalLink: "https://pebble-stallion-abb.notion.site/11a10244f99781308ab2c963d3a5967a?v=13610244f99780e29096000c92406e63&pvs=4" },
     { title: "그로스 허브", icon: <GlobeAltIcon className="h-5 w-5" />, externalLink: "https://script.google.com/macros/s/AKfycbxRh28gE6v7s7Xf-iuvWjMqORcBGZa-9U4Pqap4-Qlqc7u-KJ8aBN9L7shN0vxXqOVD/exec" },
     { title: "하이러닝 바로가기", icon: <GlobeAltIcon className="h-5 w-5" />, externalLink: "https://hi.goe.go.kr/" }
   ];
@@ -257,21 +259,21 @@ export default function Home() {
                       <span className="text-xl font-bold text-primary-dark">1</span>
                     </div>
                     <h3 className="text-xl font-nanum-square text-primary-dark mb-3">다름 드러내기</h3>
-                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">서로 다른 생각과 관점을 자유롭게 표현합니다.</p>
+                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">서로 다른 생각과 관점을 자유롭게 표현</p>
                   </div>
                   <div className="card text-center hover:shadow-xl transition-shadow flex flex-col items-center">
                     <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
                       <span className="text-xl font-bold text-primary-dark">2</span>
                     </div>
                     <h3 className="text-xl font-nanum-square text-primary-dark mb-3">다름 이해하기</h3>
-                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">서로 다른 의견의 이유와 배경을 이해합니다.</p>
+                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">서로 다른 의견의 이유와 배경을 이해</p>
                   </div>
                   <div className="card text-center hover:shadow-xl transition-shadow flex flex-col items-center">
                     <div className="bg-pink-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
                       <span className="text-xl font-bold text-primary-dark">3</span>
                     </div>
                     <h3 className="text-xl font-nanum-square text-primary-dark mb-3">다름과 공존하기</h3>
-                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">다양한 의견이 함께 존재할 수 있음을 인정합니다.</p>
+                    <p className="font-noto-sans-kr text-gray-600 whitespace-nowrap">다양한 의견이 함께 존재할 수 있음을 인정</p>
                   </div>
                 </div>
 
